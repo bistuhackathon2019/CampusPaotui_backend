@@ -9,10 +9,7 @@ import com.bistu.paotui.service.TeachOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,8 +24,12 @@ public class OrderController {
 		this.teachOrderService = teachOrderService;
 	}
 
-	@PostMapping(value = "/need", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> addNeedOrder(@RequestBody NeedOrder needOrder) {
+	@GetMapping(value = "/need", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> addNeedOrder(@RequestParam String destination, @RequestParam String location, @RequestParam String note) {
+		NeedOrder needOrder = new NeedOrder();
+		needOrder.setDestination(destination);
+		needOrder.setLocation(location);
+		needOrder.setNote(note);
 		needOrder = needOrderService.addOrder(needOrder);
 		if (needOrder.getOrderId() == null)
 			return ResponseEntity.ok("fail");
@@ -40,8 +41,11 @@ public class OrderController {
 		return needOrderService.getOrders();
 	}
 
-	@PostMapping(value = "/needteach", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> addTeachOrder(@RequestBody TeachOrder teachOrder) {
+	@GetMapping(value = "/needteach", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> addTeachOrder(@RequestParam String subject, @RequestParam String content) {
+		TeachOrder teachOrder = new TeachOrder();
+		teachOrder.setSubject(subject);
+		teachOrder.setContent(content);
 		teachOrder = teachOrderService.addOrder(teachOrder);
 		if (teachOrder.getOrderId() == null)
 			return ResponseEntity.ok("fail");
