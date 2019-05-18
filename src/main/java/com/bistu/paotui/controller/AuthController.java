@@ -27,7 +27,12 @@ public class AuthController {
 
 	@PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
 	public User userLogin(@RequestBody User user) {
-		return userService.login(user);
+		try {
+			user = userService.login(user);
+		} catch (NullPointerException e) {
+			return null;
+		}
+		return user;
 	}
 
 }
