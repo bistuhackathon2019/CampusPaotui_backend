@@ -13,9 +13,18 @@ public class NeedOrder {
 	private Integer userId;
 	private Integer type;
 	private String destination;
+	private String location;
 	private String phone;
 	private String name;
 	private String note;
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
 
 	public Integer getOrderId() {
 		return orderId;
